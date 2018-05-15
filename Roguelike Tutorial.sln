@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roguelike Tutorial", "Roguelike Tutorial.csproj", "{2D582702-3738-5DC7-77AD-740E4FC5A643}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roguelike Tutorial.Editor", "Roguelike Tutorial.Editor.csproj", "{8071CA25-1FBF-7146-99C1-C6B44C1B80CF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2D582702-3738-5DC7-77AD-740E4FC5A643}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D582702-3738-5DC7-77AD-740E4FC5A643}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D582702-3738-5DC7-77AD-740E4FC5A643}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D582702-3738-5DC7-77AD-740E4FC5A643}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8071CA25-1FBF-7146-99C1-C6B44C1B80CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8071CA25-1FBF-7146-99C1-C6B44C1B80CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8071CA25-1FBF-7146-99C1-C6B44C1B80CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8071CA25-1FBF-7146-99C1-C6B44C1B80CF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
