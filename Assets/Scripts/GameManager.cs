@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour {
     private bool enemiesMoving;
 
     private int level = 0;
-    private bool doingSetup;
+    public bool doingSetup;
 
 	// Use this for initialization
 	void Awake () {
@@ -34,34 +34,28 @@ public class GameManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
         enemies = new List<Enemy>();
         boardScript = GetComponent<BoardManager>();
-        InitGame();
 	}
 
-    //This is called each time a scene is loaded.
-    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
-    {
-        //Add one to our level number.
-        Debug.Log(mode + " loadmode");
-        level++;
-        //Call InitGame to initialize our level.
-        InitGame();
-    }
     void OnEnable()
     {
-        
-        SceneManager.sceneLoaded += OnLevelFinishedLoading;
-        Debug.Log(level + " enable");
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
+
+    // called second
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        InitGame();
+    }
+
     void OnDisable()
     {
-        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
-        Debug.Log(level + " disable");
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    void InitGame()
+    private void InitGame()
     {
         doingSetup = true;
-
+        level++;
         levelImage = GameObject.Find("LevelImage");
         levelText = GameObject.Find("LevelText").GetComponent<Text>();
         levelText.text = "Day " + level;

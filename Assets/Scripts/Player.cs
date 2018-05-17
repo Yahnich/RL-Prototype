@@ -10,24 +10,29 @@ public class Player : MovingObject {
     public int pointsPerFood = 20;
     public int pointsPerSoda = 10;
     public float restartlevelDelay = 1f;
+    public AudioClip mFX1;
+    public AudioClip mFX2;
+    public AudioClip eFX1;
+    public AudioClip eFX2;
+    public AudioClip dFX1;
+    public AudioClip dFX2;
+    public AudioClip lFX1;
 
-    public Text foodText;
+
+    private Text foodText;
 
     private Animator animator;
-    private int food = 0;
+    private int food = 100;
 	// Use this for initialization
 	protected override void Start () {
         animator = GetComponent<Animator>();
         food = GameManager.instance.playerFood;
 
+        foodText = GameObject.Find("FoodText").GetComponent<Text>();
         foodText.text = "Food: " + food;
         base.Start();
 	}
 
-    private void OnDisable()
-    {
-        GameManager.instance.playerFood = food;
-    }
     // Update is called once per frame
     void Update () {
         if (!GameManager.instance.playersTurn) { return; }
@@ -36,9 +41,8 @@ public class Player : MovingObject {
 
         horizontal = (int)Input.GetAxisRaw("Horizontal");
         vertical = (int)Input.GetAxisRaw("Vertical");
-
         if(horizontal != 0) { vertical = 0; }
-        if(horizontal != 0 || vertical != 0)
+        if(horizontal != 0 || vertical != 0 && !GameManager.instance.doingSetup)
         {
             AttemptMove<Wall>(horizontal, vertical);
         }
@@ -49,17 +53,19 @@ public class Player : MovingObject {
         if(collision.tag == "Exit")
         {
             GameManager.instance.playerFood = food;
-            Invoke("Restart", restartlevelDelay);
+            Restart();
             enabled = false;
         } else if(collision.tag == "Food")
         {
             food += pointsPerFood;
             foodText.text = "Food: " + food + "\n+" + pointsPerFood;
+            SoundManager.instance.RandomizeSFX(eFX1, eFX2);
             collision.gameObject.SetActive(false);
         } else if( collision.tag == "Soda")
         {
             food += pointsPerSoda;
             foodText.text = "Food: " + food + "\n+" + pointsPerSoda;
+            SoundManager.instance.RandomizeSFX(dFX1, dFX2);
             collision.gameObject.SetActive(false);
         }
     }
@@ -73,8 +79,8 @@ public class Player : MovingObject {
 
     private void Restart()
     {
+        GameManager.instance.doingSetup = true;
         SceneManager.LoadScene(0);
-        food = GameManager.instance.playerFood;
     }
 
     public void LoseFood(int loss)
@@ -87,7 +93,11 @@ public class Player : MovingObject {
 
     private void CheckIfGameOver()
     {
-        if(food <= 0) { GameManager.instance.GameOver(); }
+        if(food <= 0) {
+            GameManager.instance.GameOver();
+            SoundManager.instance.PlaySingle(lFX1);
+            SoundManager.instance.musicSource.Stop();
+        }
     }
 
     protected override void AttemptMove<T>(int xDir, int yDir)
@@ -96,6 +106,10 @@ public class Player : MovingObject {
         foodText.text = "Food: " + food;
         base.AttemptMove<T>(xDir, yDir);
         RaycastHit2D hit;
+        if(Move(xDir, yDir, out hit))
+        {
+            SoundManager.instance.RandomizeSFX(mFX1, mFX2);
+        }
         CheckIfGameOver();
         GameManager.instance.playersTurn = false;
     }

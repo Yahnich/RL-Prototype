@@ -20,12 +20,14 @@ public class BoardManager : MonoBehaviour {
     public Count wallCount = new Count(5, 9);
     public Count foodCount = new Count(1, 5);
     public GameObject exit;
+    public GameObject player;
     public GameObject[] floorTiles;
     public GameObject[] wallTiles;
     public GameObject[] foodTiles;
     public GameObject[] enemyTiles;
     public GameObject[] outerWallTiles;
 
+    private GameObject playerInstance;
     private Transform boardHolder;
     private List<Vector3> gridPositions = new List<Vector3>();
 
@@ -83,5 +85,9 @@ public class BoardManager : MonoBehaviour {
         int enemyCount = (int)Mathf.Log(level, 2f);
         LayoutObjectsAtRandom(enemyTiles, enemyCount, enemyCount);
         Instantiate(exit, new Vector3(columns - 1, rows - 1, 0f), Quaternion.identity);
+        if (playerInstance == null)
+        {
+            playerInstance = Instantiate(player, new Vector3(0, 0, 0f), Quaternion.identity);
+        }
     }
 }

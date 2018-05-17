@@ -55,7 +55,7 @@ public abstract class MovingObject : MonoBehaviour {
         boxCollider.enabled = false;
         hit = Physics2D.Linecast(start, end, blockingLayer);
         boxCollider.enabled = true;
-
+        Debug.Log(hit.transform);
         if(hit.transform == null)
         {
             StartCoroutine(SmoothMovement(end));
